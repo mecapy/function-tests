@@ -19,7 +19,10 @@ package:
   version: 2.1.0
   author: MecaPy Team
   license: MIT
-  visibility: internal
+  # No ``visibility`` declared : defaults to ``private`` so the package can be
+  # deployed without an organization context. The platform fixture deployment
+  # (task test:fixtures:setup) flips it to ``public`` via PATCH after deploy
+  # so the FRO-wkf-10 "all-public" workflow scenario passes.
   tags:
     - fixtures
     - benchmark
