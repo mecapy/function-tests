@@ -1,0 +1,84 @@
+# MecaPy Package Manifest — Platform test fixtures (v1 format)
+#
+# Merged successor of mecapy-noop + mecapy-wkf-fixtures.
+# Bundles four fixture functions used by the platform's BDD/E2E test suite :
+#
+#   noop        Platform overhead baseline (FRO-perf-01).
+#   fail        Always raises (failure-path tests, FRO-exec-04, FRO-jobs-06).
+#   scale       Force × Float → Force (workflow BDD primitive InputNodes).
+#   bolt_area   Struct {d, p} → Area  (workflow BDD struct InputNode).
+
+version: "1"
+
+package:
+  name: mecapy-tests
+  description: Platform test fixtures — overhead/failure baselines + workflow BDD typed functions.
+  version: 2.0.0
+  author: MecaPy Team
+  license: MIT
+  visibility: internal
+  tags:
+    - fixtures
+    - benchmark
+    - perf
+    - noop
+    - workflow
+    - e2e
+  resources:
+    tier: nano
+
+runtime:
+  kind: python
+  version: "3.12"
+  requirements: false
+
+functions:
+  noop:
+    handler: handler:noop
+    description: Returns immediately with result=0. Measures platform execution overhead (SLO < 15s).
+
+  fail:
+    handler: handler:fail
+    description: Always raises RuntimeError. Used by failure-path tests (error card, failed job detail).
+
+  scale:
+    handler: handler:scale
+    description: Multiply a Force by a dimensionless factor.
+    inputs:
+      force:
+        type: Force
+        description: Source force to scale.
+        required: true
+      factor:
+        type: Float
+        description: Dimensionless scaling factor.
+        required: true
+    outputs:
+      output:
+        type: Force
+        description: force × factor.
+
+  bolt_area:
+    handler: handler:bolt_area
+    description: |
+      Compute the nominal stress area of a bolt from a struct describing its
+      geometry. Mimics the e25-030-1 style (TypedDict struct input) so the
+      workflow BDD suite can assert struct InputNodes end-to-end.
+    inputs:
+      bolt:
+        type:
+          d: Length
+          p: Length
+        description: |
+          Bolt geometry — d is the nominal diameter in mm, p is the thread
+          pitch in mm. Struct is passed verbatim by the InputNode.
+        required: true
+    outputs:
+      area:
+        type: Area
+        description: Approximate stress area (pi/4 * (d - 0.9382 * p)^2), mm².
+
+# Tests (informational — ignored by the parser)
+tests:
+  framework: pytest
+  min_coverage: 100

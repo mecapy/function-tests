@@ -1,0 +1,26 @@
+{
+  "function": "handler:noop",
+  "description": "Tests for the no-op function — platform overhead baseline",
+  "version": "1.0.0",
+  "test_cases": [
+    {
+      "name": "empty_inputs",
+      "description": "No inputs — returns result=0",
+      "inputs": {},
+      "expected_outputs": {
+        "result": 0
+      }
+    },
+    {
+      "name": "ignored_inputs",
+      "description": "Inputs are ignored — still returns result=0",
+      "inputs": {
+        "foo": "bar",
+        "x": 42
+      },
+      "expected_outputs": {
+        "result": 0
+      }
+    }
+  ]
+}

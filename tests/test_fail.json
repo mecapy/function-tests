@@ -1,0 +1,21 @@
+{
+  "function": "handler:fail",
+  "description": "Tests for the fail function — always raises",
+  "version": "1.1.0",
+  "test_cases": [
+    {
+      "name": "empty_inputs_raises",
+      "description": "No inputs — raises RuntimeError",
+      "inputs": {},
+      "expected_exception": "RuntimeError"
+    },
+    {
+      "name": "any_inputs_raises",
+      "description": "Inputs are ignored — still raises RuntimeError",
+      "inputs": {
+        "foo": "bar"
+      },
+      "expected_exception": "RuntimeError"
+    }
+  ]
+}

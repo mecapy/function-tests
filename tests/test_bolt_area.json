@@ -1,0 +1,17 @@
+{
+  "function": "handler:bolt_area",
+  "description": "Tests for the bolt_area struct-input function",
+  "version": "1.0.0",
+  "test_cases": [
+    {
+      "name": "m12_pitch_1_75",
+      "description": "M12 bolt with 1.75mm pitch → ~84.27 mm² (tabulated)",
+      "inputs": {
+        "bolt": { "d": 12.0, "p": 1.75 }
+      },
+      "expected_outputs": {
+        "area": 84.26716816004064
+      }
+    }
+  ]
+}

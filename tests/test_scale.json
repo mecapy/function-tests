@@ -1,0 +1,18 @@
+{
+  "function": "handler:scale",
+  "description": "Tests for the scale function — workflow BDD fixtures",
+  "version": "1.0.0",
+  "test_cases": [
+    {
+      "name": "double_1000",
+      "description": "Multiply 1000 N by 2.0 → 2000 N",
+      "inputs": {
+        "force": 1000.0,
+        "factor": 2.0
+      },
+      "expected_outputs": {
+        "output": 2000.0
+      }
+    }
+  ]
+}
