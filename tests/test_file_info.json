@@ -1,0 +1,19 @@
+{
+  "function": "handler:file_info",
+  "description": "Tests for the File-input file_info handler — reads a text file and returns size/sha256/line_count.",
+  "version": "1.0.0",
+  "test_cases": [
+    {
+      "name": "sample_txt",
+      "description": "Read tests/sample.txt (3 lines, 111 bytes) and verify size + line count + sha256.",
+      "inputs": {
+        "file": "sample.txt"
+      },
+      "expected_outputs": {
+        "size_bytes": 111,
+        "sha256": "8cb7917b997f54d81760a20f41aa18ddb3e6ea4abd04ed39cd4c3caf73e5f4f3",
+        "line_count": 3
+      }
+    }
+  ]
+}

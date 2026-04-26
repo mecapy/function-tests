@@ -1,19 +1,22 @@
 # MecaPy Package Manifest — Platform test fixtures (v1 format)
 #
-# Merged successor of mecapy-noop + mecapy-wkf-fixtures.
-# Bundles four fixture functions used by the platform's BDD/E2E test suite :
+# Merged successor of mecapy-noop + mecapy-wkf-fixtures, plus File-typed
+# end-to-end target for the SDK upload helper (session 22).
+# Bundles five fixture functions used by the platform's BDD/E2E test suite :
 #
 #   noop        Platform overhead baseline (FRO-perf-01).
 #   fail        Always raises (failure-path tests, FRO-exec-04, FRO-jobs-06).
 #   scale       Force × Float → Force (workflow BDD primitive InputNodes).
 #   bolt_area   Struct {d, p} → Area  (workflow BDD struct InputNode).
+#   file_info   File[txt,csv,json,md] → {size_bytes, sha256, line_count}
+#               (FRO-type-07 + SDK File upload helper end-to-end).
 
 version: "1"
 
 package:
   name: mecapy-tests
   description: Platform test fixtures — overhead/failure baselines + workflow BDD typed functions.
-  version: 2.0.0
+  version: 2.1.0
   author: MecaPy Team
   license: MIT
   visibility: internal
@@ -24,6 +27,7 @@ package:
     - noop
     - workflow
     - e2e
+    - file-upload
   resources:
     tier: nano
 
@@ -77,6 +81,29 @@ functions:
       area:
         type: Area
         description: Approximate stress area (pi/4 * (d - 0.9382 * p)^2), mm².
+
+  file_info:
+    handler: handler:file_info
+    description: |
+      Read a text-ish input File and return its byte size, SHA-256 digest,
+      and line count. Canonical end-to-end target for File upload — exercised
+      by the SDK's auto-upload helper (Path-like detect + POST /uploads +
+      forward upload_id via file_inputs).
+    inputs:
+      file:
+        type: File[txt,csv,json,md]
+        description: Any text-like input file. Extension validated server-side.
+        required: true
+    outputs:
+      size_bytes:
+        type: Integer
+        description: Total byte size of the file content.
+      sha256:
+        type: String
+        description: SHA-256 hex digest of the file content.
+      line_count:
+        type: Integer
+        description: Number of newline characters in the file.
 
 # Tests (informational — ignored by the parser)
 tests:

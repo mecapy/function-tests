@@ -1,0 +1,3 @@
+Hello from MecaPy!
+This is a small text fixture used by the file_info handler test.
+Line three of the fixture.
